@@ -3,1017 +3,204 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reporte de Resultados y Evaluación OCV</title>
-  <style>
-    :root {
-      --primary: #1e3a8a;
-      --primary-hover: #1e40af;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --border: #e2e8f0;
-      --text: #0f172a;
-      --text-muted: #64748b;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      padding: 32px 16px;
-      line-height: 1.5;
-    }
-
-    /* === ESTILOS DEL SPLASH SCREEN === */
-    #splash-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #1e3a8a;
-      color: #ffffff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 99999;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
-    }
-
-    .splash-content {
-      text-align: center;
-    }
-
-    .splash-content h2 {
-      font-size: 1.4rem;
-      margin-top: 20px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
-
-    .splash-content p {
-      font-size: 0.9rem;
-      opacity: 0.85;
-      margin-top: 6px;
-    }
-
-    .splash-spinner {
-      width: 60px;
-      height: 60px;
-      border: 5px solid rgba(255, 255, 255, 0.2);
-      border-top: 5px solid #ffffff;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    #splash-screen.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    /* === CONTENEDOR Y CABECERA === */
-    .form-container {
-      max-width: 860px;
-      margin: 0 auto;
-      background: var(--card-bg);
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      padding: 32px;
-    }
-
-    .form-header {
-      border-bottom: 2px solid var(--border);
-      padding-bottom: 20px;
-      margin-bottom: 24px;
-    }
-
-    .header-content {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .header-logo {
-      height: 65px;
-      width: auto;
-      object-fit: contain;
-    }
-
-    .header-text h1 {
-      font-size: 1.5rem;
-      color: var(--primary);
-      margin-bottom: 4px;
-    }
-
-    .header-text p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    @media (max-width: 600px) {
-      .header-content {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-      }
-      .header-logo {
-        height: 50px;
-      }
-    }
-
-    .section-title {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--primary);
-      margin: 28px 0 16px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .subsection-subtitle {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      margin-bottom: 14px;
-    }
-
-    .subsection-heading {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--text);
-      margin: 18px 0 6px;
-    }
-
-    .field-hint {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-      margin-bottom: 2px;
-      line-height: 1.3;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
-    }
-
-    @media (max-width: 640px) {
-      .grid-2, .grid-3 {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 14px;
-    }
-
-    .form-group label {
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .form-group input[type="text"], 
-    .form-group input[type="email"], 
-    .form-group input[type="number"], 
-    .form-group input[type="date"], 
-    .form-group select, 
-    .form-group textarea {
-      padding: 10px 12px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 0.95rem;
-      background-color: #fff;
-    }
-
-    .form-group input:focus, 
-    .form-group select:focus, 
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
-    }
-
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      margin-bottom: 12px;
-    }
-
-    .data-table th, .data-table td {
-      border: 1px solid var(--border);
-      padding: 10px 12px;
-      vertical-align: middle;
-    }
-
-    .data-table th {
-      background-color: #f8fafc;
-      color: var(--text);
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-align: left;
-    }
-
-    .data-table input {
-      width: 100%;
-      padding: 8px 10px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 0.9rem;
-    }
-
-    .btn-remove-row {
-      background-color: #dc2626;
-      color: #ffffff;
-      border: none;
-      border-radius: 6px;
-      width: 32px;
-      height: 32px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto;
-      transition: background-color 0.2s;
-    }
-
-    .btn-remove-row:hover {
-      background-color: #b91c1c;
-    }
-
-    .btn-add-row {
-      background-color: #059669;
-      color: #ffffff;
-      border: none;
-      border-radius: 6px;
-      padding: 9px 16px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: background-color 0.2s;
-      margin-bottom: 16px;
-    }
-
-    .btn-add-row:hover {
-      background-color: #047857;
-    }
-
-    .row-total td {
-      font-weight: bold;
-      background-color: #f8fafc;
-    }
-
-    .checkbox-container {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 12px;
-      font-size: 0.92rem;
-      color: var(--text);
-      cursor: pointer;
-    }
-
-    .checkbox-container input[type="checkbox"] {
-      margin-top: 3px;
-      width: 17px;
-      height: 17px;
-      cursor: pointer;
-    }
-
-    .file-input-wrapper {
-      margin-top: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .file-input-wrapper label {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .file-input-wrapper input[type="file"] {
-      font-size: 0.9rem;
-    }
-
-    .drive-notice {
-      background-color: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 8px;
-      padding: 12px 16px;
-      margin-top: 8px;
-      font-size: 0.88rem;
-      color: #1e40af;
-      line-height: 1.4;
-    }
-
-    .drive-notice a {
-      color: #1d4ed8;
-      font-weight: 600;
-      text-decoration: underline;
-    }
-
-    .drive-warning {
-      display: none;
-      background-color: #fef2f2;
-      border: 1px solid #fecaca;
-      border-radius: 8px;
-      padding: 12px 16px;
-      margin-top: 10px;
-      font-size: 0.9rem;
-      color: #991b1b;
-      line-height: 1.4;
-    }
-
-    .drive-warning a {
-      color: #dc2626;
-      font-weight: bold;
-      text-decoration: underline;
-    }
-
-    .eval-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
-      margin-bottom: 16px;
-    }
-
-    .eval-table th, .eval-table td {
-      border: 1px solid var(--border);
-      padding: 10px 12px;
-      text-align: center;
-      vertical-align: middle;
-    }
-
-    .eval-table th:first-child, .eval-table td:first-child {
-      text-align: left;
-    }
-
-    .eval-table th {
-      background-color: #f8fafc;
-      color: var(--text);
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-
-    .eval-table input[type="radio"] {
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
-    }
-
-    .btn-submit {
-      width: 100%;
-      background-color: var(--primary);
-      color: #ffffff;
-      padding: 14px 20px;
-      font-size: 1rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 24px;
-      transition: background-color 0.2s;
-    }
-
-    .btn-submit:hover {
-      background-color: var(--primary-hover);
-    }
-
-    .btn-submit:disabled {
-      background-color: #94a3b8;
-      cursor: not-allowed;
-    }
-  </style>
+  <title>Registro para Convenio de Colaboración</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen py-10 px-4">
 
-  <!-- SPLASH SCREEN / PANTALLA DE CARGA -->
-  <div id="splash-screen">
-    <div class="splash-content">
-      <div class="splash-spinner"></div>
-      <h2>Reporte de Resultados OCV</h2>
-      <p>Cargando el formulario, por favor espera...</p>
-    </div>
-  </div>
-
-  <div class="form-container">
-    <div class="form-header">
-      <div class="header-content">
-        <img src="LOGO-OCV-1-300x151.png" alt="Logo OCV Monterrey" class="header-logo">
-        <div class="header-text">
-          <h1>Reporte de Resultados y Evaluación OCV</h1>
-          <p>Completa los campos para generar automáticamente el documento Word oficial.</p>
+  <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 md:p-8">
+    
+    <!-- HEADER CON LOGO A LA IZQUIERDA -->
+    <header class="mb-8 border-b pb-4">
+      <div class="flex items-center gap-4">
+        <img src="LOGOCV.png" alt="Logo OCV" class="h-16 md:h-20 w-auto object-contain">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold text-slate-900">Convenio de Colaboración</h1>
+          <p class="text-slate-600 mt-1">Completa la información y adjunta la documentación solicitada para formalizar el apoyo.</p>
         </div>
       </div>
-    </div>
+    </header>
 
-    <form id="ocvForm">
-      <!-- 1. Resumen Ejecutivo del Evento -->
-      <div class="section-title">1. Resumen Ejecutivo del Evento</div>
-      
-      <div class="form-group">
-        <label for="nombre_evento">Nombre del Evento *</label>
-        <input type="text" id="nombre_evento" name="nombre_evento" placeholder="Ej. Festival Cielo Mágico" required>
-      </div>
+    <form id="convenioForm" class="space-y-8" onsubmit="handleSubmit(event)">
 
-      <div class="form-group">
-        <label for="nombre_organizador">Nombre del Organizador *</label>
-        <input type="text" id="nombre_organizador" name="nombre_organizador" placeholder="Ej. Patronato Cielo Mágico A.C." required>
-      </div>
-
-      <div class="grid-2">
-        <div class="form-group">
-          <label for="fecha_inicio">Fecha de Inicio *</label>
-          <input type="date" id="fecha_inicio" name="fecha_inicio" required>
+      <!-- CORREO DE CONTACTO -->
+      <section class="space-y-4">
+        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">Datos de Contacto</h2>
+        <div>
+          <label class="block text-sm font-medium mb-1" for="correoContacto">Correo electrónico de contacto *</label>
+          <input type="email" id="correoContacto" required placeholder="correo@ejemplo.com" class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <p class="text-xs text-slate-500 mt-1">A esta dirección enviaremos la confirmación de recepción.</p>
         </div>
-        <div class="form-group">
-          <label for="fecha_fin">Fecha de Fin *</label>
-          <input type="date" id="fecha_fin" name="fecha_fin" required>
-        </div>
-      </div>
+      </section>
 
-      <div class="form-group">
-        <label for="recinto">Recinto / Sede *</label>
-        <input type="text" id="recinto" name="recinto" placeholder="Ej. Parque Cielo Mágico, Santiago, N.L." required>
-      </div>
-
-      <div class="form-group">
-        <label for="boletera_select">Boletera *</label>
-        <select id="boletera_select" name="boletera_select" onchange="toggleOtroBoletera()" required>
-          <option value="" disabled selected>Selecciona una boletera</option>
-          <option value="Ticketmaster">Ticketmaster</option>
-          <option value="Superboletos">Superboletos</option>
-          <option value="Eticket">Eticket</option>
-          <option value="Boletia">Boletia</option>
-          <option value="Boletea Tickets">Boletea Tickets</option>
-          <option value="AREMA Ticket">AREMA Ticket</option>
-          <option value="Otro">Otro</option>
-        </select>
-      </div>
-
-      <div class="form-group" id="grupo_boletera_otro" style="display: none;">
-        <label for="boletera_otro">Especifica cuál boletera *</label>
-        <input type="text" id="boletera_otro" name="boletera_otro" placeholder="Escribe el nombre de la boletera">
-      </div>
-
-      <!-- 2. Asistencia y Resultados -->
-      <div class="section-title">2. Registro de Asistencia y Resultados</div>
-      <div class="grid-3">
-        <div class="form-group">
-          <label for="total_asistentes">Número Total de Asistentes</label>
-          <input type="text" id="total_asistentes" name="total_asistentes" placeholder="Ej. 50,000">
-          <span class="field-hint">Número total de personas que asistirán al evento.</span>
-        </div>
-        <div class="form-group">
-          <label for="asistentes_locales">Asistentes Locales</label>
-          <input type="text" id="asistentes_locales" name="asistentes_locales" placeholder="Ej. 44,000">
-          <span class="field-hint">Personas que residen en Nuevo León.</span>
-        </div>
-        <div class="form-group">
-          <label for="asistentes_foraneos">Asistentes Foráneos</label>
-          <input type="text" id="asistentes_foraneos" name="asistentes_foraneos" placeholder="Ej. 6,000">
-          <span class="field-hint">Personas que provienen de fuera de Nuevo León.</span>
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="form-group">
-          <label for="cuartos_noche">Cuartos-Noche Generados (Total Global)</label>
-          <input type="text" id="cuartos_noche" name="cuartos_noche" placeholder="Ej. 4,800">
-          <span class="field-hint">Número de habitaciones de hotel ocupadas por los asistentes foráneos durante el evento.</span>
-        </div>
-        <div class="form-group">
-          <label for="derrama_economica">Derrama Económica Estimada ($ M.N.)</label>
-          <input type="text" id="derrama_economica" name="derrama_economica" placeholder="Ej. $248,400,000 M.N.">
-          <span class="field-hint">Gasto estimado que generará el evento en la ciudad.</span>
-        </div>
-      </div>
-
-      <!-- 3. Hotelería Dinámica -->
-      <div class="section-title">3. Relación de Hotelería y Cuartos – Noche</div>
-
-      <table class="data-table" id="tablaHoteles">
-        <thead>
-          <tr>
-            <th style="width: 60%;">Nombre del Hotel / Zona de Hospedaje</th>
-            <th style="width: 28%;">Cuartos - Noche Estimados</th>
-            <th style="width: 12%; text-align: center;">Acción</th>
-          </tr>
-        </thead>
-        <tbody id="hotelBody">
-          <tr>
-            <td><input type="text" class="hotel-nombre" placeholder="Nombre del hotel"></td>
-            <td><input type="number" class="hotel-cuartos" value="0" min="0" oninput="calcularTotalHoteles()"></td>
-            <td style="text-align: center;"><button type="button" class="btn-remove-row" onclick="eliminarFilaHotel(this)">✕</button></td>
-          </tr>
-          <tr>
-            <td><input type="text" class="hotel-nombre" placeholder="Nombre del hotel o zona"></td>
-            <td><input type="number" class="hotel-cuartos" value="0" min="0" oninput="calcularTotalHoteles()"></td>
-            <td style="text-align: center;"><button type="button" class="btn-remove-row" onclick="eliminarFilaHotel(this)">✕</button></td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr class="row-total">
-            <td>Total Hotelería Estimado</td>
-            <td id="labelTotalHoteles">0</td>
-            <td></td>
-          </tr>
-        </tfoot>
-      </table>
-
-      <button type="button" class="btn-add-row" onclick="agregarFilaHotel()">+ Agregar Hotel</button>
-
-      <!-- 4. Resumen Demográfico de Asistentes -->
-      <div class="section-title">4. Resumen Demográfico de Asistentes (Anónimo)</div>
-      <p class="subsection-subtitle">Indica de qué estado o país provienen los asistentes y registra el número estimado de personas de cada lugar.</p>
-
-      <div class="subsection-heading">Procedencia por Estado / Región (Cantidad de Asistentes):</div>
-
-      <table class="data-table" id="tablaProcedencias">
-        <thead>
-          <tr>
-            <th style="width: 60%;">Estado / Procedencia</th>
-            <th style="width: 28%;">Número de Asistentes</th>
-            <th style="width: 12%; text-align: center;">Acción</th>
-          </tr>
-        </thead>
-        <tbody id="procedenciaBody">
-          <tr>
-            <td><input type="text" class="procedencia-lugar" placeholder="Estado o Ciudad"></td>
-            <td><input type="number" class="procedencia-cantidad" value="0" min="0" oninput="calcularTotalProcedencias()"></td>
-            <td style="text-align: center;"><button type="button" class="btn-remove-row" onclick="eliminarFilaProcedencia(this)">✕</button></td>
-          </tr>
-          <tr>
-            <td><input type="text" class="procedencia-lugar" placeholder="Estado o Ciudad"></td>
-            <td><input type="number" class="procedencia-cantidad" value="0" min="0" oninput="calcularTotalProcedencias()"></td>
-            <td style="text-align: center;"><button type="button" class="btn-remove-row" onclick="eliminarFilaProcedencia(this)">✕</button></td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr class="row-total">
-            <td>Total Asistentes por Procedencia</td>
-            <td id="labelTotalProcedencias">0</td>
-            <td></td>
-          </tr>
-        </tfoot>
-      </table>
-
-      <button type="button" class="btn-add-row" onclick="agregarFilaProcedencia()">+ Agregar Procedencia</button>
-
-      <div class="subsection-heading">Distribución por Rango de Edad (%):</div>
-      <p class="subsection-subtitle">Indica el porcentaje estimado de asistentes que corresponde a cada rango de edad. La suma de todos los rangos debe ser 100%.</p>
-
-      <div class="grid-2">
-        <div class="form-group">
-          <label for="edad_3_17">3 a 17 años (%)</label>
-          <input type="number" id="edad_3_17" name="edad_3_17" placeholder="0" min="0" max="100">
-        </div>
-        <div class="form-group">
-          <label for="edad_18_25">18 a 25 años (%)</label>
-          <input type="number" id="edad_18_25" name="edad_18_25" placeholder="0" min="0" max="100">
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="form-group">
-          <label for="edad_26_30">26 a 30 años (%)</label>
-          <input type="number" id="edad_26_30" name="edad_26_30" placeholder="0" min="0" max="100">
-        </div>
-        <div class="form-group">
-          <label for="edad_31_39">31 a 39 años (%)</label>
-          <input type="number" id="edad_31_39" name="edad_31_39" placeholder="0" min="0" max="100">
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="form-group">
-          <label for="edad_40_55">40 a 55 años (%)</label>
-          <input type="number" id="edad_40_55" name="edad_40_55" placeholder="0" min="0" max="100">
-        </div>
-        <div class="form-group">
-          <label for="edad_56_mas">56 años o más (%)</label>
-          <input type="number" id="edad_56_mas" name="edad_56_mas" placeholder="0" min="0" max="100">
-        </div>
-      </div>
-
-      <!-- 5. Evidencia Documental -->
-      <div class="section-title">5. Evidencia Documental</div>
-      <p class="subsection-subtitle">Selecciona la evidencia disponible y adjunta los archivos que ayuden a complementar la información del evento.</p>
-      
-      <label class="checkbox-container">
-        <input type="checkbox" id="check_bd" value="Base de datos digital original (exportada de sistema de registro: edad, sexo y procedencia sin datos personales).">
-        <span>Base de datos digital original (exportada de sistema de registro: edad, sexo y procedencia sin datos personales).</span>
-      </label>
-
-      <label class="checkbox-container">
-        <input type="checkbox" id="check_testigos" value="Testigos fotográficos (gafetes, presencia de marca/logos, aforos, memorias del evento).">
-        <span>Testigos fotográficos (gafetes, presencia de marca/logos, aforos, memorias del evento).</span>
-      </label>
-
-      <div class="file-input-wrapper">
-        <label for="archivos_adjuntos">Adjuntar Archivos / Reportes (ZIP, PDF, Excel o Imágenes):</label>
-        <input type="file" id="archivos_adjuntos" multiple accept=".zip,.pdf,.xls,.xlsx,.doc,.docx,.png,.jpg,.jpeg" onchange="validarTamanoArchivos()">
+      <!-- PASO 1: Información del Evento -->
+      <section class="space-y-4">
+        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">1. Información del Evento</h2>
         
-        <div class="drive-notice">
-          ℹ️ <strong>Nota:</strong> Si tus archivos pesan más de <strong>15 MB en total</strong>, por favor súbelos directamente a nuestra 
-          <a href="https://drive.google.com/drive/folders/1cXZV0SWfkk-V8m69QT-jBj4LVOvEdC0q?usp=sharing" target="_blank" rel="noopener">carpeta compartida de Google Drive aquí</a>.
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="col-span-1 md:col-span-2">
+            <label class="block text-sm font-medium mb-1" for="nombreEvento">Nombre del evento *</label>
+            <input type="text" id="nombreEvento" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
 
-        <div class="drive-warning" id="driveWarning">
-          ⚠️ <strong>Archivos muy pesados:</strong> El peso total de tus archivos seleccionados es de <span id="pesoTotalArchivos">0</span> MB (supera el límite de 15 MB).<br>
-          Por favor deselecciónalos y cáargalos directamente en la <a href="https://drive.google.com/drive/folders/1cXZV0SWfkk-V8m69QT-jBj4LVOvEdC0q?usp=sharing" target="_blank" rel="noopener">Carpeta Compartida de Google Drive</a> para poder enviar tu reporte.
+          <div class="col-span-1 md:col-span-2">
+            <label class="block text-sm font-medium mb-1" for="recintoSede">Recinto sede *</label>
+            <input type="text" id="recintoSede" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="fechaInicio">Fecha de inicio *</label>
+            <input type="date" id="fechaInicio" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="fechaFin">Fecha de fin *</label>
+            <input type="date" id="fechaFin" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="asistenciaTotal">Asistencia total estimada *</label>
+            <input type="number" id="asistenciaTotal" min="1" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="asistenciaForanea">Asistencia foránea estimada (Opcional)</label>
+            <input type="number" id="asistenciaForanea" min="0" class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
         </div>
+      </section>
+
+      <!-- PASO 2: Tipo de Persona -->
+      <section class="space-y-4">
+        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">2. Tipo de Persona</h2>
+        <p class="text-sm text-slate-600">Selecciona la figura bajo la cual se firmará el convenio:</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <label class="flex items-center p-4 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition">
+            <input type="radio" name="tipoPersona" value="moral" onchange="toggleDocs('moral')" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+            <span class="ml-3 font-medium text-slate-700">Persona Moral</span>
+          </label>
+
+          <label class="flex items-center p-4 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition">
+            <input type="radio" name="tipoPersona" value="fisica" onchange="toggleDocs('fisica')" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+            <span class="ml-3 font-medium text-slate-700">Persona Física</span>
+          </label>
+        </div>
+      </section>
+
+      <!-- SECCIÓN DOCUMENTOS MORAL -->
+      <section id="sectionDocsMoral" class="hidden space-y-4">
+        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">3. Documentación - Persona Moral</h2>
+        <div class="grid grid-cols-1 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-200">
+          <div>
+            <label class="block text-sm font-medium mb-1">Acta Constitutiva (inc. RPP / Folio Mercantil) *</label>
+            <input type="file" name="doc_moral_acta" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Poder Notarial vigente del Representante Legal *</label>
+            <input type="file" name="doc_moral_poder" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Constancia de Situación Fiscal actualizada *</label>
+            <input type="file" name="doc_moral_csf" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Identificación oficial (INE) del Representante Legal *</label>
+            <input type="file" name="doc_moral_ine_rep" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Identificación oficial (INE) del testigo *</label>
+            <input type="file" name="doc_moral_ine_testigo" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Comprobante de domicilio de la empresa *</label>
+            <input type="file" name="doc_moral_domicilio" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Currículum de la empresa *</label>
+            <input type="file" name="doc_moral_cv" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Última declaración anual *</label>
+            <input type="file" name="doc_moral_declaracion" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN DOCUMENTOS FÍSICA -->
+      <section id="sectionDocsFisica" class="hidden space-y-4">
+        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">3. Documentación - Persona Física</h2>
+        <div class="grid grid-cols-1 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-200">
+          <div>
+            <label class="block text-sm font-medium mb-1">Constancia de Situación Fiscal actualizada *</label>
+            <input type="file" name="doc_fisica_csf" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Comprobante de domicilio *</label>
+            <input type="file" name="doc_fisica_domicilio" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Contrato con el recinto donde se realizará el evento *</label>
+            <input type="file" name="doc_fisica_contrato" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Identificación oficial (INE) de la persona firmante *</label>
+            <input type="file" name="doc_fisica_ine_firmante" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Identificación oficial (INE) del testigo *</label>
+            <input type="file" name="doc_fisica_ine_testigo" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Última declaración anual *</label>
+            <input type="file" name="doc_fisica_declaracion" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+        </div>
+      </section>
+
+      <div class="pt-4">
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
+          Enviar Información
+        </button>
       </div>
 
-      <!-- 6. Experiencia en el Destino y OCV -->
-      <div class="section-title">6. Experiencia en el Destino y OCV</div>
-      <p class="subsection-subtitle">Evalúa tu experiencia con la asesoría y acompañamiento recibidos durante el evento.</p>
-      
-      <div class="form-group">
-        <label for="asesora_nombre">Asesora / Ejecutivo que lo atendió *</label>
-        <select id="asesora_nombre" name="asesora_nombre" required>
-          <option value="" disabled selected>Selecciona una opción</option>
-          <option value="Brenda Ruiz">Brenda Ruiz</option>
-          <option value="Gabriela Santillán">Gabriela Santillán</option>
-          <option value="Samantha Moncayo">Samantha Moncayo</option>
-          <option value="Laura Sánchez">Laura Sánchez</option>
-          <option value="Erika López">Erika López</option>
-          <option value="Berenice Yépez">Berenice Yépez</option>
-        </select>
-      </div>
-
-      <table class="eval-table">
-        <thead>
-          <tr>
-            <th style="width: 44%;">Concepto a Evaluar</th>
-            <th style="width: 14%;">Excelente</th>
-            <th style="width: 14%;">Bueno</th>
-            <th style="width: 14%;">Regular</th>
-            <th style="width: 14%;">Malo</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Servicio de la Asesora / OCV</td>
-            <td><input type="radio" name="servicio_asesora" value="Excelente" checked></td>
-            <td><input type="radio" name="servicio_asesora" value="Bueno"></td>
-            <td><input type="radio" name="servicio_asesora" value="Regular"></td>
-            <td><input type="radio" name="servicio_asesora" value="Malo"></td>
-          </tr>
-          <tr>
-            <td>Servicio de Proveeduría Local</td>
-            <td><input type="radio" name="servicio_proveeduria" value="Excelente" checked></td>
-            <td><input type="radio" name="servicio_proveeduria" value="Bueno"></td>
-            <td><input type="radio" name="servicio_proveeduria" value="Regular"></td>
-            <td><input type="radio" name="servicio_proveeduria" value="Malo"></td>
-          </tr>
-          <tr>
-            <td>Experiencia en el Recinto</td>
-            <td><input type="radio" name="experiencia_recinto" value="Excelente" checked></td>
-            <td><input type="radio" name="experiencia_recinto" value="Bueno"></td>
-            <td><input type="radio" name="experiencia_recinto" value="Regular"></td>
-            <td><input type="radio" name="experiencia_recinto" value="Malo"></td>
-          </tr>
-          <tr>
-            <td>Servicio en Hoteles</td>
-            <td><input type="radio" name="servicio_hoteles" value="Excelente" checked></td>
-            <td><input type="radio" name="servicio_hoteles" value="Bueno"></td>
-            <td><input type="radio" name="servicio_hoteles" value="Regular"></td>
-            <td><input type="radio" name="servicio_hoteles" value="Malo"></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="form-group">
-        <label for="comentarios">Comentarios y Retroalimentación Adicional:</label>
-        <textarea id="comentarios" name="comentarios" rows="3" placeholder="Escriba aquí sus observaciones..."></textarea>
-      </div>
-
-      <!-- 7. Datos de Contacto y Declaración -->
-      <div class="section-title">7. Datos de Contacto y Declaración</div>
-      <div class="grid-3">
-        <div class="form-group">
-          <label for="contacto_nombre">Nombre Completo *</label>
-          <input type="text" id="contacto_nombre" name="contacto_nombre" placeholder="Nombre de contacto" required>
-        </div>
-        <div class="form-group">
-          <label for="contacto_telefono">Teléfono *</label>
-          <input type="text" id="contacto_telefono" name="contacto_telefono" placeholder="Ej. 81 1234 5678" required>
-        </div>
-        <div class="form-group">
-          <label for="contacto_mail">Correo Electrónico *</label>
-          <input type="email" id="contacto_mail" name="contacto_mail" placeholder="correo@ejemplo.com" required>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="organizador_cargo">Cargo / Puesto *</label>
-        <input type="text" id="organizador_cargo" name="organizador_cargo" placeholder="Ej. CEO / Director General" required>
-      </div>
-
-      <label class="checkbox-container" style="margin-top: 16px;">
-        <input type="checkbox" id="declaracion_veracidad" name="declaracion_veracidad" required>
-        <span>Declaro que la información y los datos proporcionados en el presente formulario son completos, correctos y verídicos, y manifiesto mi conformidad y responsabilidad respecto de la exactitud de la información ingresada.</span>
-      </label>
-
-      <button type="submit" class="btn-submit" id="submitBtn">Generar Reporte y Enviar</button>
     </form>
   </div>
 
   <script>
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwNOoZTIL3BpE2FTY5IOkfRADsZoUT1BVI2FTHeX00SIUQgDtL0_EZ21eAlcSNDZ1TE/exec';
+    function toggleDocs(type) {
+      const sectionMoral = document.getElementById('sectionDocsMoral');
+      const sectionFisica = document.getElementById('sectionDocsFisica');
+      
+      const inputsMoral = document.querySelectorAll('.doc-moral');
+      const inputsFisica = document.querySelectorAll('.doc-fisica');
 
-    const form = document.getElementById('ocvForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const MAX_SIZE_BYTES = 15 * 1024 * 1024;
-
-    // === CONTROL DEL SPLASH SCREEN ===
-    window.addEventListener('load', function() {
-      const splash = document.getElementById('splash-screen');
-      setTimeout(() => {
-        splash.classList.add('hidden');
-      }, 600);
-    });
-
-    // === MOSTRAR / OCULTAR CAMPO DE "OTRO" EN BOLETERA ===
-    function toggleOtroBoletera() {
-      const select = document.getElementById('boletera_select');
-      const grupoOtro = document.getElementById('grupo_boletera_otro');
-      const inputOtro = document.getElementById('boletera_otro');
-
-      if (select.value === 'Otro') {
-        grupoOtro.style.display = 'flex';
-        inputOtro.required = true;
-      } else {
-        grupoOtro.style.display = 'none';
-        inputOtro.required = false;
-        inputOtro.value = '';
+      if (type === 'moral') {
+        sectionMoral.classList.remove('hidden');
+        sectionFisica.classList.add('hidden');
+        
+        inputsMoral.forEach(i => i.required = true);
+        inputsFisica.forEach(i => { i.required = false; i.value = ''; });
+      } else if (type === 'fisica') {
+        sectionFisica.classList.remove('hidden');
+        sectionMoral.classList.add('hidden');
+        
+        inputsFisica.forEach(i => i.required = true);
+        inputsMoral.forEach(i => { i.required = false; i.value = ''; });
       }
     }
 
-    // === VALIDAR TAMAÑO DE ARCHIVOS ===
-    function validarTamanoArchivos() {
-      const fileInput = document.getElementById('archivos_adjuntos');
-      const warningBox = document.getElementById('driveWarning');
-      const pesoSpan = document.getElementById('pesoTotalArchivos');
-
-      let totalBytes = 0;
-      if (fileInput && fileInput.files.length > 0) {
-        for (let i = 0; i < fileInput.files.length; i++) {
-          totalBytes += fileInput.files[i].size;
-        }
+    function handleSubmit(event) {
+      event.preventDefault();
+      
+      const tipoPersona = document.querySelector('input[name="tipoPersona"]:checked');
+      if (!tipoPersona) {
+        alert('Por favor, selecciona si el convenio se firmará como Persona Moral o Persona Física.');
+        return;
       }
 
-      const totalMB = (totalBytes / (1024 * 1024)).toFixed(2);
-
-      if (totalBytes > MAX_SIZE_BYTES) {
-        warningBox.style.display = 'block';
-        pesoSpan.innerText = totalMB;
-        submitBtn.disabled = true;
-        alert(`Tus archivos pesan ${totalMB} MB en total, superando el límite de 15 MB.\n\nPor favor súbelos a la carpeta de Google Drive indicada.`);
-      } else {
-        warningBox.style.display = 'none';
-        submitBtn.disabled = false;
-      }
+      alert('Formulario completado correctamente. Listo para procesar o enviar.');
     }
-
-    // === HOTELES ===
-    function agregarFilaHotel() {
-      const tbody = document.getElementById('hotelBody');
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td><input type="text" class="hotel-nombre" placeholder="Nombre del hotel o zona"></td>
-        <td><input type="number" class="hotel-cuartos" value="0" min="0" oninput="calcularTotalHoteles()"></td>
-        <td style="text-align: center;"><button type="button" class="btn-remove-row" onclick="eliminarFilaHotel(this)">✕</button></td>
-      `;
-      tbody.appendChild(tr);
-    }
-
-    function eliminarFilaHotel(btn) {
-      const tbody = document.getElementById('hotelBody');
-      if (tbody.rows.length > 1) {
-        btn.closest('tr').remove();
-        calcularTotalHoteles();
-      } else {
-        alert('Debe existir al menos una fila en la relación de hoteles.');
-      }
-    }
-
-    function calcularTotalHoteles() {
-      const inputs = document.querySelectorAll('.hotel-cuartos');
-      let total = 0;
-      inputs.forEach(input => {
-        const val = parseFloat(input.value) || 0;
-        total += val;
-      });
-      document.getElementById('labelTotalHoteles').innerText = total.toLocaleString();
-    }
-
-    // === PROCEDENCIAS ===
-    function agregarFilaProcedencia() {
-      const tbody = document.getElementById('procedenciaBody');
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td><input type="text" class="procedencia-lugar" placeholder="Estado o Ciudad"></td>
-        <td><input type="number" class="procedencia-cantidad" value="0" min="0" oninput="calcularTotalProcedencias()"></td>
-        <td style="text-align: center;"><button type="button" class="btn-remove-row" onclick="eliminarFilaProcedencia(this)">✕</button></td>
-      `;
-      tbody.appendChild(tr);
-    }
-
-    function eliminarFilaProcedencia(btn) {
-      const tbody = document.getElementById('procedenciaBody');
-      if (tbody.rows.length > 1) {
-        btn.closest('tr').remove();
-        calcularTotalProcedencias();
-      } else {
-        alert('Debe existir al menos una fila de procedencia.');
-      }
-    }
-
-    function calcularTotalProcedencias() {
-      const inputs = document.querySelectorAll('.procedencia-cantidad');
-      let total = 0;
-      inputs.forEach(input => {
-        const val = parseFloat(input.value) || 0;
-        total += val;
-      });
-      document.getElementById('labelTotalProcedencias').innerText = total.toLocaleString();
-    }
-
-    // === CONVERSIÓN DE ARCHIVOS A BASE64 ===
-    function readFileAsBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const base64String = reader.result.split(',')[1];
-          resolve({
-            name: file.name,
-            type: file.type,
-            base64: base64String
-          });
-        };
-        reader.onerror = error => reject(error);
-        reader.readAsDataURL(file);
-      });
-    }
-
-    // === ENVÍO DEL FORMULARIO ===
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      const originalText = submitBtn.innerText;
-      submitBtn.innerText = 'Procesando archivos y generando Word...';
-      submitBtn.disabled = true;
-
-      const selBoletera = document.getElementById('boletera_select')?.value || '';
-      const boleteraFinal = selBoletera === 'Otro' 
-        ? (document.getElementById('boletera_otro')?.value || 'Otro') 
-        : selBoletera;
-
-      const fInicio = document.getElementById('fecha_inicio')?.value || '';
-      const fFin = document.getElementById('fecha_fin')?.value || '';
-      let fechaTexto = '';
-      if (fInicio && fFin) {
-        fechaTexto = `Del ${fInicio} al ${fFin}`;
-      } else if (fInicio) {
-        fechaTexto = fInicio;
-      } else if (fFin) {
-        fechaTexto = fFin;
-      }
-
-      const e0 = document.getElementById('edad_3_17')?.value;
-      const e1 = document.getElementById('edad_18_25')?.value;
-      const e2 = document.getElementById('edad_26_30')?.value;
-      const e3 = document.getElementById('edad_31_39')?.value;
-      const e4 = document.getElementById('edad_40_55')?.value;
-      const e5 = document.getElementById('edad_56_mas')?.value;
-
-      let resumenEdades = [];
-      if (e0) resumenEdades.push('3 a 17 años: ' + e0 + '%');
-      if (e1) resumenEdades.push('18 a 25 años: ' + e1 + '%');
-      if (e2) resumenEdades.push('26 a 30 años: ' + e2 + '%');
-      if (e3) resumenEdades.push('31 a 39 años: ' + e3 + '%');
-      if (e4) resumenEdades.push('40 a 55 años: ' + e4 + '%');
-      if (e5) resumenEdades.push('56 años o más: ' + e5 + '%');
-
-      let evidencias = [];
-      const c1 = document.getElementById('check_bd');
-      const c2 = document.getElementById('check_testigos');
-      if (c1 && c1.checked) evidencias.push('☒ ' + c1.value);
-      if (c2 && c2.checked) evidencias.push('☒ ' + c2.value);
-
-      const fileInput = document.getElementById('archivos_adjuntos');
-      let archivosAdjuntos = [];
-      if (fileInput && fileInput.files.length > 0) {
-        for (let i = 0; i < fileInput.files.length; i++) {
-          const fileData = await readFileAsBase64(fileInput.files[i]);
-          archivosAdjuntos.push(fileData);
-        }
-      }
-
-      const data = {
-        nombre_evento: document.getElementById('nombre_evento')?.value || '',
-        nombre_organizador: document.getElementById('nombre_organizador')?.value || '',
-        fecha_realizacion: fechaTexto,
-        recinto: document.getElementById('recinto')?.value || '',
-        boletera: boleteraFinal,
-
-        total_asistentes: document.getElementById('total_asistentes')?.value || '',
-        asistentes_locales: document.getElementById('asistentes_locales')?.value || '',
-        asistentes_foraneos: document.getElementById('asistentes_foraneos')?.value || '',
-        cuartos_noche: document.getElementById('cuartos_noche')?.value || '',
-        derrama_economica: document.getElementById('derrama_economica')?.value || '',
-
-        distribucion_edad: resumenEdades.join('\n') || 'Sin especificar',
-        evidencia_documental: evidencias.join('\n') || 'Sin evidencia documental marcada',
-
-        asesora_nombre: document.getElementById('asesora_nombre')?.value || '',
-        servicio_asesora: document.querySelector('input[name="servicio_asesora"]:checked')?.value || '',
-        servicio_proveeduria: document.querySelector('input[name="servicio_proveeduria"]:checked')?.value || '',
-        experiencia_recinto: document.querySelector('input[name="experiencia_recinto"]:checked')?.value || '',
-        servicio_hoteles: document.querySelector('input[name="servicio_hoteles"]:checked')?.value || '',
-        comentarios: document.getElementById('comentarios')?.value || '',
-
-        contacto_nombre: document.getElementById('contacto_nombre')?.value || '',
-        contacto_telefono: document.getElementById('contacto_telefono')?.value || '',
-        contacto_mail: document.getElementById('contacto_mail')?.value || '',
-        organizador_cargo: document.getElementById('organizador_cargo')?.value || '',
-        declaracion_veracidad: document.getElementById('declaracion_veracidad')?.checked ? 'Aceptada' : 'No aceptada',
-
-        archivos_adjuntos: archivosAdjuntos
-      };
-
-      const nombresHoteles = document.querySelectorAll('.hotel-nombre');
-      const cuartosHoteles = document.querySelectorAll('.hotel-cuartos');
-      for (let i = 0; i < 5; i++) {
-        data[`hotel_${i + 1}_nombre`] = nombresHoteles[i] ? nombresHoteles[i].value : '';
-        data[`hotel_${i + 1}_cuartos`] = (cuartosHoteles[i] && cuartosHoteles[i].value !== '0') ? cuartosHoteles[i].value : '';
-      }
-      data['total_hoteleria_cuartos'] = document.getElementById('labelTotalHoteles').innerText;
-
-      const lugaresProcedencia = document.querySelectorAll('.procedencia-lugar');
-      const cantidadesProcedencia = document.querySelectorAll('.procedencia-cantidad');
-      for (let i = 0; i < 4; i++) {
-        data[`procedencia_${i + 1}_lugar`] = lugaresProcedencia[i] ? lugaresProcedencia[i].value : '';
-        data[`procedencia_${i + 1}_cantidad`] = (cantidadesProcedencia[i] && cantidadesProcedencia[i].value !== '0') ? cantidadesProcedencia[i].value : '';
-      }
-      data['procedencia_otros_cantidad'] = (cantidadesProcedencia[4] && cantidadesProcedencia[4].value !== '0') ? cantidadesProcedencia[4].value : '';
-      data['procedencia_total'] = document.getElementById('labelTotalProcedencias').innerText;
-
-      try {
-        await fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'text/plain;charset=utf-8'
-          },
-          body: JSON.stringify(data)
-        });
-
-        alert('¡Reporte generado con éxito! Se ha enviado el documento Word y los archivos adjuntos a tu correo.');
-        form.reset();
-        document.getElementById('grupo_boletera_otro').style.display = 'none';
-        document.getElementById('labelTotalHoteles').innerText = '0';
-        document.getElementById('labelTotalProcedencias').innerText = '0';
-        document.getElementById('driveWarning').style.display = 'none';
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Ocurrió un error al procesar el formulario.');
-      } finally {
-        submitBtn.innerText = originalText;
-        submitBtn.disabled = false;
-      }
-    });
   </script>
 </body>
 </html>
