@@ -10,9 +10,15 @@
 
   <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 md:p-8">
     
+    <!-- HEADER CON LOGO A LA IZQUIERDA -->
     <header class="mb-8 border-b pb-4">
-      <h1 class="text-2xl md:text-3xl font-bold text-slate-900">Convenio de Colaboración</h1>
-      <p class="text-slate-600 mt-2">Completa la información y adjunta la documentación solicitada para formalizar el apoyo.</p>
+      <div class="flex items-center gap-4">
+        <img src="LOGOOCC.png" alt="Logo OCV" class="h-16 md:h-20 w-auto object-contain">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold text-slate-900">Convenio de Colaboración</h1>
+          <p class="text-slate-600 mt-1">Completa la información y adjunta la documentación solicitada para formalizar el apoyo.</p>
+        </div>
+      </div>
     </header>
 
     <form id="convenioForm" class="space-y-8" onsubmit="handleSubmit(event)">
@@ -82,36 +88,78 @@
         </div>
       </section>
 
-      <!-- PASO 3: Carga de Documentos (Moral) -->
+      <!-- SECCIÓN DOCUMENTOS MORAL -->
       <section id="sectionDocsMoral" class="hidden space-y-4">
         <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">3. Documentación - Persona Moral</h2>
         <div class="grid grid-cols-1 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-200">
-          <div><label class="block text-sm font-medium mb-1">Acta Constitutiva (inc. RPP / Folio Mercantil) *</label><input type="file" class="doc-moral w-full text-sm"></div>
-          <div><label class="block text-sm font-medium mb-1">Poder Notarial vigente del Representante Legal *</label><input type="file" class="doc-moral w-full text-sm"></div>
-          <div><label class="block text-sm font-medium mb-1">Constancia de Situación Fiscal actualizada *</label><input type="file" class="doc-moral w-full text-sm"></div>
-          <div><label class="block text-sm font-medium mb-1">Identificación oficial (INE) del Representante Legal *</label><input type="file" class="doc-moral w-full text-sm"></div>
-          <div><label class="block text-sm font-medium mb-1">Identificación oficial (INE) del testigo *</label><input type="file" class="doc-moral w-full text-sm"></div>
-          <div><label class="block text-sm font-medium mb-1">Comprobante de domicilio de la empresa *</label><input type="file" class="doc-moral w-full text-sm"></div>
-          <div><label class="block text-sm font-medium mb-1">Currículum de la empresa *</label><input type="file" class="doc-moral w-full text-sm"></div>
-          <div><label class="block text-sm font-medium mb-1">Última declaración anual *</label><input type="file" class="doc-moral w-full text-sm"></div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Acta Constitutiva (inc. RPP / Folio Mercantil) *</label>
+            <input type="file" name="doc_moral_acta" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Poder Notarial vigente del Representante Legal *</label>
+            <input type="file" name="doc_moral_poder" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Constancia de Situación Fiscal actualizada *</label>
+            <input type="file" name="doc_moral_csf" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Identificación oficial (INE) del Representante Legal *</label>
+            <input type="file" name="doc_moral_ine_rep" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Identificación oficial (INE) del testigo *</label>
+            <input type="file" name="doc_moral_ine_testigo" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Comprobante de domicilio de la empresa *</label>
+            <input type="file" name="doc_moral_domicilio" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Currículum de la empresa *</label>
+            <input type="file" name="doc_moral_cv" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Última declaración anual *</label>
+            <input type="file" name="doc_moral_declaracion" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
         </div>
       </section>
 
-      <!-- PASO 3: Carga de Documentos (Física) -->
+      <!-- SECCIÓN DOCUMENTOS FÍSICA -->
       <section id="sectionDocsFisica" class="hidden space-y-4">
         <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">3. Documentación - Persona Física</h2>
         <div class="grid grid-cols-1 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-200">
-          <div><label class="block text-sm font-medium mb-1">Constancia de Situación Fiscal actualizada *</label><input type="file" class="doc-fisica w-full text-sm"></div>
-          <div><label class="block text-sm font-medium mb-1">Comprobante de domicilio *</label><input type="file" class="doc-fisica w-full text-sm"></div>
-          <div><label class="block text-sm font-medium mb-1">Contrato con el recinto donde se realizará el evento *</label><input type="file" class="doc-fisica w-full text-sm"></div>
-          <div><label class="block text-sm font-medium mb-1">Identificación oficial (INE) de la persona firmante *</label><input type="file" class="doc-fisica w-full text-sm"></div>
-          <div><label class="block text-sm font-medium mb-1">Identificación oficial (INE) del testigo *</label><input type="file" class="doc-fisica w-full text-sm"></div>
-          <div><label class="block text-sm font-medium mb-1">Última declaración anual *</label><input type="file" class="doc-fisica w-full text-sm"></div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Constancia de Situación Fiscal actualizada *</label>
+            <input type="file" name="doc_fisica_csf" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Comprobante de domicilio *</label>
+            <input type="file" name="doc_fisica_domicilio" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Contrato con el recinto donde se realizará el evento *</label>
+            <input type="file" name="doc_fisica_contrato" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Identificación oficial (INE) de la persona firmante *</label>
+            <input type="file" name="doc_fisica_ine_firmante" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Identificación oficial (INE) del testigo *</label>
+            <input type="file" name="doc_fisica_ine_testigo" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Última declaración anual *</label>
+            <input type="file" name="doc_fisica_declaracion" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          </div>
         </div>
       </section>
 
       <div class="pt-4">
-        <button id="btnSubmit" type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
           Enviar Información
         </button>
       </div>
@@ -120,93 +168,38 @@
   </div>
 
   <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKiDenQ3JT5j89776xKLpPSpX0KNiQbaGvAiBc6sIR4A5I1-F8THWGvY-k6kLelE7C/exec";
-
     function toggleDocs(type) {
       const sectionMoral = document.getElementById('sectionDocsMoral');
       const sectionFisica = document.getElementById('sectionDocsFisica');
+      
       const inputsMoral = document.querySelectorAll('.doc-moral');
       const inputsFisica = document.querySelectorAll('.doc-fisica');
 
       if (type === 'moral') {
         sectionMoral.classList.remove('hidden');
         sectionFisica.classList.add('hidden');
+        
         inputsMoral.forEach(i => i.required = true);
         inputsFisica.forEach(i => { i.required = false; i.value = ''; });
-      } else {
+      } else if (type === 'fisica') {
         sectionFisica.classList.remove('hidden');
         sectionMoral.classList.add('hidden');
+        
         inputsFisica.forEach(i => i.required = true);
         inputsMoral.forEach(i => { i.required = false; i.value = ''; });
       }
     }
 
-    function fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve({ nombre: file.name, mimeType: file.type, data: reader.result });
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-
-    async function handleSubmit(event) {
+    function handleSubmit(event) {
       event.preventDefault();
-
-      const tipoPersona = document.querySelector('input[name="tipoPersona"]:checked')?.value;
+      
+      const tipoPersona = document.querySelector('input[name="tipoPersona"]:checked');
       if (!tipoPersona) {
-        alert("Por favor selecciona el tipo de persona (Moral o Física).");
+        alert('Por favor, selecciona si el convenio se firmará como Persona Moral o Persona Física.');
         return;
       }
 
-      const btn = document.getElementById('btnSubmit');
-      btn.disabled = true;
-      btn.classList.add('opacity-50', 'cursor-not-allowed');
-      btn.innerText = "Subiendo documentos y enviando...";
-
-      try {
-        const fileInputs = document.querySelectorAll(tipoPersona === 'moral' ? '.doc-moral' : '.doc-fisica');
-        const archivosPromises = Array.from(fileInputs)
-          .filter(input => input.files.length > 0)
-          .map(input => fileToBase64(input.files[0]));
-
-        const archivos = await Promise.all(archivosPromises);
-
-        const payload = {
-          correoContacto: document.getElementById('correoContacto').value,
-          nombreEvento: document.getElementById('nombreEvento').value,
-          recintoSede: document.getElementById('recintoSede').value,
-          fechaInicio: document.getElementById('fechaInicio').value,
-          fechaFin: document.getElementById('fechaFin').value,
-          asistenciaTotal: document.getElementById('asistenciaTotal').value,
-          asistenciaForanea: document.getElementById('asistenciaForanea').value,
-          tipoPersona: tipoPersona,
-          archivos: archivos
-        };
-
-        // AJUSTE CLAVE: "Content-Type": "text/plain;charset=utf-8" con mode "no-cors"
-        await fetch(APPS_SCRIPT_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "text/plain;charset=utf-8"
-          },
-          body: JSON.stringify(payload)
-        });
-
-        alert("¡Registro completado con éxito!\n\n• Los documentos han sido subidos a la carpeta de Google Drive.\n• Se ha enviado un correo de confirmación a la dirección especificada.");
-        document.getElementById('convenioForm').reset();
-        document.getElementById('sectionDocsMoral').classList.add('hidden');
-        document.getElementById('sectionDocsFisica').classList.add('hidden');
-
-      } catch (err) {
-        alert("Ocurrió un error al procesar el envío. Inténtalo de nuevo.");
-        console.error(err);
-      } finally {
-        btn.disabled = false;
-        btn.classList.remove('opacity-50', 'cursor-not-allowed');
-        btn.innerText = "Enviar Información";
-      }
+      alert('Formulario completado correctamente. Listo para procesar o enviar.');
     }
   </script>
 </body>
