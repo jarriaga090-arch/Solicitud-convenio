@@ -120,7 +120,6 @@
   </div>
 
   <script>
-    // PEGA AQUÍ TU URL GENERADA EN EL PASO 2
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKiDenQ3JT5j89776xKLpPSpX0KNiQbaGvAiBc6sIR4A5I1-F8THWGvY-k6kLelE7C/exec";
 
     function toggleDocs(type) {
@@ -185,10 +184,13 @@
           archivos: archivos
         };
 
+        // AJUSTE CLAVE: "Content-Type": "text/plain;charset=utf-8" con mode "no-cors"
         await fetch(APPS_SCRIPT_URL, {
           method: "POST",
           mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
           body: JSON.stringify(payload)
         });
 
