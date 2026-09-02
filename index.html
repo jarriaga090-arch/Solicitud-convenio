@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro para Convenio de Colaboración</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen py-10 px-4">
+
+  <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 md:p-8">
+    
+    <header class="mb-8 border-b pb-4">
+      <h1 class="text-2xl md:text-3xl font-bold text-slate-900">Convenio de Colaboración</h1>
+      <p class="text-slate-600 mt-2">Completa la información y adjunta la documentación solicitada para formalizar el apoyo.</p>
+    </header>
+
+    <form id="convenioForm" class="space-y-8" onsubmit="handleSubmit(event)">
+
+      <!-- CORREO DE CONTACTO -->
+      <section class="space-y-4">
+        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">Datos de Contacto</h2>
+        <div>
+          <label class="block text-sm font-medium mb-1" for="correoContacto">Correo electrónico de contacto *</label>
+          <input type="email" id="correoContacto" required placeholder="correo@ejemplo.com" class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <p class="text-xs text-slate-500 mt-1">A esta dirección enviaremos la confirmación de recepción.</p>
+        </div>
+      </section>
+
+      <!-- PASO 1: Información del Evento -->
+      <section class="space-y-4">
+        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">1. Información del Evento</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="col-span-1 md:col-span-2">
+            <label class="block text-sm font-medium mb-1" for="nombreEvento">Nombre del evento *</label>
+            <input type="text" id="nombreEvento" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+
+          <div class="col-span-1 md:col-span-2">
+            <label class="block text-sm font-medium mb-1" for="recintoSede">Recinto sede *</label>
+            <input type="text" id="recintoSede" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="fechaInicio">Fecha de inicio *</label>
+            <input type="date" id="fechaInicio" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="fechaFin">Fecha de fin *</label>
+            <input type="date" id="fechaFin" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="asistenciaTotal">Asistencia total estimada *</label>
+            <input type="number" id="asistenciaTotal" min="1" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="asistenciaForanea">Asistencia foránea estimada (Opcional)</label>
+            <input type="number" id="asistenciaForanea" min="0" class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+        </div>
+      </section>
+
+      <!-- PASO 2: Tipo de Persona -->
+      <section class="space-y-4">
+        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">2. Tipo de Persona</h2>
+        <p class="text-sm text-slate-600">Selecciona la figura bajo la cual se firmará el convenio:</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <label class="flex items-center p-4 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition">
+            <input type="radio" name="tipoPersona" value="moral" onchange="toggleDocs('moral')" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+            <span class="ml-3 font-medium text-slate-700">Persona Moral</span>
+          </label>
+
+          <label class="flex items-center p-4 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition">
+            <input type="radio" name="tipoPersona" value="fisica" onchange="toggleDocs('fisica')" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+            <span class="ml-3 font-medium text-slate-700">Persona Física</span>
+          </label>
+        </div>
+      </section>
+
+      <!-- PASO 3: Carga de Documentos (Moral) -->
+      <section id="sectionDocsMoral" class="hidden space-y-4">
+        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">3. Documentación - Persona Moral</h2>
+        <div class="grid grid-cols-1 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-200">
+          <div><label class="block text-sm font-medium mb-1">Acta Constitutiva (inc. RPP / Folio Mercantil) *</label><input type="file" class="doc-moral w-full text-sm"></div>
+          <div><label class="block text-sm font-medium mb-1">Poder Notarial vigente del Representante Legal *</label><input type="file" class="doc-moral w-full text-sm"></div>
+          <div><label class="block text-sm font-medium mb-1">Constancia de Situación Fiscal actualizada *</label><input type="file" class="doc-moral w-full text-sm"></div>
+          <div><label class="block text-sm font-medium mb-1">Identificación oficial (INE) del Representante Legal *</label><input type="file" class="doc-moral w-full text-sm"></div>
+          <div><label class="block text-sm font-medium mb-1">Identificación oficial (INE) del testigo *</label><input type="file" class="doc-moral w-full text-sm"></div>
+          <div><label class="block text-sm font-medium mb-1">Comprobante de domicilio de la empresa *</label><input type="file" class="doc-moral w-full text-sm"></div>
+          <div><label class="block text-sm font-medium mb-1">Currículum de la empresa *</label><input type="file" class="doc-moral w-full text-sm"></div>
+          <div><label class="block text-sm font-medium mb-1">Última declaración anual *</label><input type="file" class="doc-moral w-full text-sm"></div>
+        </div>
+      </section>
+
+      <!-- PASO 3: Carga de Documentos (Física) -->
+      <section id="sectionDocsFisica" class="hidden space-y-4">
+        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">3. Documentación - Persona Física</h2>
+        <div class="grid grid-cols-1 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-200">
+          <div><label class="block text-sm font-medium mb-1">Constancia de Situación Fiscal actualizada *</label><input type="file" class="doc-fisica w-full text-sm"></div>
+          <div><label class="block text-sm font-medium mb-1">Comprobante de domicilio *</label><input type="file" class="doc-fisica w-full text-sm"></div>
+          <div><label class="block text-sm font-medium mb-1">Contrato con el recinto donde se realizará el evento *</label><input type="file" class="doc-fisica w-full text-sm"></div>
+          <div><label class="block text-sm font-medium mb-1">Identificación oficial (INE) de la persona firmante *</label><input type="file" class="doc-fisica w-full text-sm"></div>
+          <div><label class="block text-sm font-medium mb-1">Identificación oficial (INE) del testigo *</label><input type="file" class="doc-fisica w-full text-sm"></div>
+          <div><label class="block text-sm font-medium mb-1">Última declaración anual *</label><input type="file" class="doc-fisica w-full text-sm"></div>
+        </div>
+      </section>
+
+      <div class="pt-4">
+        <button id="btnSubmit" type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
+          Enviar Información
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <script>
+    // PEGA AQUÍ TU URL GENERADA EN EL PASO 2
+    const APPS_SCRIPT_URL = "PEGA_AQUI_TU_URL_DE_APPS_SCRIPT";
+
+    function toggleDocs(type) {
+      const sectionMoral = document.getElementById('sectionDocsMoral');
+      const sectionFisica = document.getElementById('sectionDocsFisica');
+      const inputsMoral = document.querySelectorAll('.doc-moral');
+      const inputsFisica = document.querySelectorAll('.doc-fisica');
+
+      if (type === 'moral') {
+        sectionMoral.classList.remove('hidden');
+        sectionFisica.classList.add('hidden');
+        inputsMoral.forEach(i => i.required = true);
+        inputsFisica.forEach(i => { i.required = false; i.value = ''; });
+      } else {
+        sectionFisica.classList.remove('hidden');
+        sectionMoral.classList.add('hidden');
+        inputsFisica.forEach(i => i.required = true);
+        inputsMoral.forEach(i => { i.required = false; i.value = ''; });
+      }
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve({ nombre: file.name, mimeType: file.type, data: reader.result });
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function handleSubmit(event) {
+      event.preventDefault();
+
+      const tipoPersona = document.querySelector('input[name="tipoPersona"]:checked')?.value;
+      if (!tipoPersona) {
+        alert("Por favor selecciona el tipo de persona (Moral o Física).");
+        return;
+      }
+
+      const btn = document.getElementById('btnSubmit');
+      btn.disabled = true;
+      btn.classList.add('opacity-50', 'cursor-not-allowed');
+      btn.innerText = "Subiendo documentos y enviando...";
+
+      try {
+        const fileInputs = document.querySelectorAll(tipoPersona === 'moral' ? '.doc-moral' : '.doc-fisica');
+        const archivosPromises = Array.from(fileInputs)
+          .filter(input => input.files.length > 0)
+          .map(input => fileToBase64(input.files[0]));
+
+        const archivos = await Promise.all(archivosPromises);
+
+        const payload = {
+          correoContacto: document.getElementById('correoContacto').value,
+          nombreEvento: document.getElementById('nombreEvento').value,
+          recintoSede: document.getElementById('recintoSede').value,
+          fechaInicio: document.getElementById('fechaInicio').value,
+          fechaFin: document.getElementById('fechaFin').value,
+          asistenciaTotal: document.getElementById('asistenciaTotal').value,
+          asistenciaForanea: document.getElementById('asistenciaForanea').value,
+          tipoPersona: tipoPersona,
+          archivos: archivos
+        };
+
+        await fetch(APPS_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        alert("¡Registro completado con éxito!\n\n• Los documentos han sido subidos a la carpeta de Google Drive.\n• Se ha enviado un correo de confirmación a la dirección especificada.");
+        document.getElementById('convenioForm').reset();
+        document.getElementById('sectionDocsMoral').classList.add('hidden');
+        document.getElementById('sectionDocsFisica').classList.add('hidden');
+
+      } catch (err) {
+        alert("Ocurrió un error al procesar el envío. Inténtalo de nuevo.");
+        console.error(err);
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+        btn.innerText = "Enviar Información";
+      }
+    }
+  </script>
+</body>
+</html>
