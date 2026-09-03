@@ -1,206 +1,291 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro para Convenio de Colaboración</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-slate-100 text-slate-800 font-sans min-h-screen py-10 px-4">
+<!DOCTYPE html> 
+<html lang="es"> 
+<head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Registro para Convenio de Colaboración</title> 
+  <script src="https://cdn.tailwindcss.com"></script> 
+  <style>
+    /* === ESTILOS DEL SPLASH SCREEN (OPCIÓN 2: RIPPLE / ONDAS) === */
+    .splash-container-ripple {
+      position: fixed;
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%;
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
+      color: #ffffff;
+      display: flex; 
+      justify-content: center; 
+      align-items: center;
+      z-index: 99999;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
 
-  <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 md:p-8">
-    
-    <!-- HEADER CON LOGO A LA IZQUIERDA -->
-    <header class="mb-8 border-b pb-4">
-      <div class="flex items-center gap-4">
-        <img src="LOGOOCV.png" alt="Logo OCV" class="h-16 md:h-20 w-auto object-contain">
-        <div>
-          <h1 class="text-2xl md:text-3xl font-bold text-slate-900">Convenio de Colaboración</h1>
-          <p class="text-slate-600 mt-1">Completa la información y adjunta la documentación solicitada para formalizar el apoyo.</p>
-        </div>
+    .ripple-content { 
+      text-align: center; 
+    }
+
+    .ripple-content h2 { 
+      font-size: 1.4rem; 
+      font-weight: 600; 
+      margin-top: 16px; 
+    }
+
+    .ripple-content p { 
+      font-size: 0.85rem; 
+      opacity: 0.8; 
+      margin-top: 4px; 
+    }
+
+    .ripple-effect {
+      display: inline-block; 
+      position: relative; 
+      width: 80px; 
+      height: 80px;
+    }
+
+    .ripple-effect div {
+      position: absolute; 
+      border: 4px solid #3b82f6; 
+      opacity: 1;
+      border-radius: 50%; 
+      animation: rippleAnim 1.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    }
+
+    .ripple-effect div:nth-child(2) { 
+      animation-delay: -0.6s; 
+    }
+
+    @keyframes rippleAnim {
+      0% { top: 36px; left: 36px; width: 0; height: 0; opacity: 0; }
+      4.9% { top: 36px; left: 36px; width: 0; height: 0; opacity: 0; }
+      5% { top: 36px; left: 36px; width: 0; height: 0; opacity: 1; }
+      100% { top: 0px; left: 0px; width: 72px; height: 72px; opacity: 0; }
+    }
+
+    .splash-container-ripple.hidden { 
+      opacity: 0; 
+      visibility: hidden; 
+    }
+  </style>
+</head> 
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen py-10 px-4"> 
+
+  <!-- SPLASH SCREEN OPCIÓN 2: RIPPLE -->
+  <div id="splash-screen" class="splash-container-ripple">
+    <div class="ripple-content">
+      <div class="ripple-effect">
+        <div></div><div></div>
       </div>
-    </header>
-
-    <form id="convenioForm" class="space-y-8" onsubmit="handleSubmit(event)">
-
-      <!-- CORREO DE CONTACTO -->
-      <section class="space-y-4">
-        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">Datos de Contacto</h2>
-        <div>
-          <label class="block text-sm font-medium mb-1" for="correoContacto">Correo electrónico de contacto *</label>
-          <input type="email" id="correoContacto" required placeholder="correo@ejemplo.com" class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <p class="text-xs text-slate-500 mt-1">A esta dirección enviaremos la confirmación de recepción.</p>
-        </div>
-      </section>
-
-      <!-- PASO 1: Información del Evento -->
-      <section class="space-y-4">
-        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">1. Información del Evento</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="col-span-1 md:col-span-2">
-            <label class="block text-sm font-medium mb-1" for="nombreEvento">Nombre del evento *</label>
-            <input type="text" id="nombreEvento" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-          </div>
-
-          <div class="col-span-1 md:col-span-2">
-            <label class="block text-sm font-medium mb-1" for="recintoSede">Recinto sede *</label>
-            <input type="text" id="recintoSede" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium mb-1" for="fechaInicio">Fecha de inicio *</label>
-            <input type="date" id="fechaInicio" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium mb-1" for="fechaFin">Fecha de fin *</label>
-            <input type="date" id="fechaFin" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium mb-1" for="asistenciaTotal">Asistencia total estimada *</label>
-            <input type="number" id="asistenciaTotal" min="1" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium mb-1" for="asistenciaForanea">Asistencia foránea estimada (Opcional)</label>
-            <input type="number" id="asistenciaForanea" min="0" class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-          </div>
-        </div>
-      </section>
-
-      <!-- PASO 2: Tipo de Persona -->
-      <section class="space-y-4">
-        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">2. Tipo de Persona</h2>
-        <p class="text-sm text-slate-600">Selecciona la figura bajo la cual se firmará el convenio:</p>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <label class="flex items-center p-4 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition">
-            <input type="radio" name="tipoPersona" value="moral" onchange="toggleDocs('moral')" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
-            <span class="ml-3 font-medium text-slate-700">Persona Moral</span>
-          </label>
-
-          <label class="flex items-center p-4 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition">
-            <input type="radio" name="tipoPersona" value="fisica" onchange="toggleDocs('fisica')" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
-            <span class="ml-3 font-medium text-slate-700">Persona Física</span>
-          </label>
-        </div>
-      </section>
-
-      <!-- SECCIÓN DOCUMENTOS MORAL -->
-      <section id="sectionDocsMoral" class="hidden space-y-4">
-        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">3. Documentación - Persona Moral</h2>
-        <div class="grid grid-cols-1 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-200">
-          <div>
-            <label class="block text-sm font-medium mb-1">Acta Constitutiva (inc. RPP / Folio Mercantil) *</label>
-            <input type="file" name="doc_moral_acta" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Poder Notarial vigente del Representante Legal *</label>
-            <input type="file" name="doc_moral_poder" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Constancia de Situación Fiscal actualizada *</label>
-            <input type="file" name="doc_moral_csf" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Identificación oficial (INE) del Representante Legal *</label>
-            <input type="file" name="doc_moral_ine_rep" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Identificación oficial (INE) del testigo *</label>
-            <input type="file" name="doc_moral_ine_testigo" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Comprobante de domicilio de la empresa *</label>
-            <input type="file" name="doc_moral_domicilio" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Currículum de la empresa *</label>
-            <input type="file" name="doc_moral_cv" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Última declaración anual *</label>
-            <input type="file" name="doc_moral_declaracion" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-          </div>
-        </div>
-      </section>
-
-      <!-- SECCIÓN DOCUMENTOS FÍSICA -->
-      <section id="sectionDocsFisica" class="hidden space-y-4">
-        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">3. Documentación - Persona Física</h2>
-        <div class="grid grid-cols-1 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-200">
-          <div>
-            <label class="block text-sm font-medium mb-1">Constancia de Situación Fiscal actualizada *</label>
-            <input type="file" name="doc_fisica_csf" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Comprobante de domicilio *</label>
-            <input type="file" name="doc_fisica_domicilio" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Contrato con el recinto donde se realizará el evento *</label>
-            <input type="file" name="doc_fisica_contrato" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Identificación oficial (INE) de la persona firmante *</label>
-            <input type="file" name="doc_fisica_ine_firmante" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Identificación oficial (INE) del testigo *</label>
-            <input type="file" name="doc_fisica_ine_testigo" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Última declaración anual *</label>
-            <input type="file" name="doc_fisica_declaracion" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-          </div>
-        </div>
-      </section>
-
-      <div class="pt-4">
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
-          Enviar Información
-        </button>
-      </div>
-
-    </form>
+      <h2>Convenio de Colaboración</h2>
+      <p>Iniciando servicio de registro...</p>
+    </div>
   </div>
 
-  <script>
-    function toggleDocs(type) {
-      const sectionMoral = document.getElementById('sectionDocsMoral');
-      const sectionFisica = document.getElementById('sectionDocsFisica');
-      
-      const inputsMoral = document.querySelectorAll('.doc-moral');
-      const inputsFisica = document.querySelectorAll('.doc-fisica');
+  <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 md:p-8"> 
+    
+    <!-- HEADER CON LOGO A LA IZQUIERDA --> 
+    <header class="mb-8 border-b pb-4"> 
+      <div class="flex items-center gap-4"> 
+        <img src="LOGOOCV.png" alt="Logo OCV" class="h-16 md:h-20 w-auto object-contain"> 
+        <div> 
+          <h1 class="text-2xl md:text-3xl font-bold text-slate-900">Convenio de Colaboración</h1> 
+          <p class="text-slate-600 mt-1">Completa la información y adjunta la documentación solicitada para formalizar el apoyo.</p> 
+        </div> 
+      </div> 
+    </header> 
 
-      if (type === 'moral') {
-        sectionMoral.classList.remove('hidden');
-        sectionFisica.classList.add('hidden');
+    <form id="convenioForm" class="space-y-8" onsubmit="handleSubmit(event)"> 
+
+      <!-- CORREO DE CONTACTO --> 
+      <section class="space-y-4"> 
+        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">Datos de Contacto</h2> 
+        <div> 
+          <label class="block text-sm font-medium mb-1" for="correoContacto">Correo electrónico de contacto *</label> 
+          <input type="email" id="correoContacto" required placeholder="correo@ejemplo.com" class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"> 
+          <p class="text-xs text-slate-500 mt-1">A esta dirección enviaremos la confirmación de recepción.</p> 
+        </div> 
+      </section> 
+
+      <!-- PASO 1: Información del Evento --> 
+      <section class="space-y-4"> 
+        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">1. Información del Evento</h2> 
         
-        inputsMoral.forEach(i => i.required = true);
-        inputsFisica.forEach(i => { i.required = false; i.value = ''; });
-      } else if (type === 'fisica') {
-        sectionFisica.classList.remove('hidden');
-        sectionMoral.classList.add('hidden');
-        
-        inputsFisica.forEach(i => i.required = true);
-        inputsMoral.forEach(i => { i.required = false; i.value = ''; });
-      }
-    }
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4"> 
+          <div class="col-span-1 md:col-span-2"> 
+            <label class="block text-sm font-medium mb-1" for="nombreEvento">Nombre del evento *</label> 
+            <input type="text" id="nombreEvento" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"> 
+          </div> 
 
-    function handleSubmit(event) {
-      event.preventDefault();
+          <div class="col-span-1 md:col-span-2"> 
+            <label class="block text-sm font-medium mb-1" for="recintoSede">Recinto sede *</label> 
+            <input type="text" id="recintoSede" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"> 
+          </div> 
+
+          <div> 
+            <label class="block text-sm font-medium mb-1" for="fechaInicio">Fecha de inicio *</label> 
+            <input type="date" id="fechaInicio" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"> 
+          </div> 
+
+          <div> 
+            <label class="block text-sm font-medium mb-1" for="fechaFin">Fecha de fin *</label> 
+            <input type="date" id="fechaFin" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"> 
+          </div> 
+
+          <div> 
+            <label class="block text-sm font-medium mb-1" for="asistenciaTotal">Asistencia total estimada *</label> 
+            <input type="number" id="asistenciaTotal" min="1" required class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"> 
+          </div> 
+
+          <div> 
+            <label class="block text-sm font-medium mb-1" for="asistenciaForanea">Asistencia foránea estimada (Opcional)</label> 
+            <input type="number" id="asistenciaForanea" min="0" class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"> 
+          </div> 
+        </div> 
+      </section> 
+
+      <!-- PASO 2: Tipo de Persona --> 
+      <section class="space-y-4"> 
+        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">2. Tipo de Persona</h2> 
+        <p class="text-sm text-slate-600">Selecciona la figura bajo la cual se firmará el convenio:</p> 
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4"> 
+          <label class="flex items-center p-4 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition"> 
+            <input type="radio" name="tipoPersona" value="moral" onchange="toggleDocs('moral')" class="w-4 h-4 text-blue-600 focus:ring-blue-500"> 
+            <span class="ml-3 font-medium text-slate-700">Persona Moral</span> 
+          </label> 
+
+          <label class="flex items-center p-4 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition"> 
+            <input type="radio" name="tipoPersona" value="fisica" onchange="toggleDocs('fisica')" class="w-4 h-4 text-blue-600 focus:ring-blue-500"> 
+            <span class="ml-3 font-medium text-slate-700">Persona Física</span> 
+          </label> 
+        </div> 
+      </section> 
+
+      <!-- SECCIÓN DOCUMENTOS MORAL --> 
+      <section id="sectionDocsMoral" class="hidden space-y-4"> 
+        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">3. Documentación - Persona Moral</h2> 
+        <div class="grid grid-cols-1 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-200"> 
+          <div> 
+            <label class="block text-sm font-medium mb-1">Acta Constitutiva (inc. RPP / Folio Mercantil) *</label> 
+            <input type="file" name="doc_moral_acta" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"> 
+          </div> 
+          <div> 
+            <label class="block text-sm font-medium mb-1">Poder Notarial vigente del Representante Legal *</label> 
+            <input type="file" name="doc_moral_poder" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"> 
+          </div> 
+          <div> 
+            <label class="block text-sm font-medium mb-1">Constancia de Situación Fiscal actualizada *</label> 
+            <input type="file" name="doc_moral_csf" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"> 
+          </div> 
+          <div> 
+            <label class="block text-sm font-medium mb-1">Identificación oficial (INE) del Representante Legal *</label> 
+            <input type="file" name="doc_moral_ine_rep" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"> 
+          </div> 
+          <div> 
+            <label class="block text-sm font-medium mb-1">Identificación oficial (INE) del testigo *</label> 
+            <input type="file" name="doc_moral_ine_testigo" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"> 
+          </div> 
+          <div> 
+            <label class="block text-sm font-medium mb-1">Comprobante de domicilio de la empresa *</label> 
+            <input type="file" name="doc_moral_domicilio" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"> 
+          </div> 
+          <div> 
+            <label class="block text-sm font-medium mb-1">Currículum de la empresa *</label> 
+            <input type="file" name="doc_moral_cv" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"> 
+          </div> 
+          <div> 
+            <label class="block text-sm font-medium mb-1">Última declaración anual *</label> 
+            <input type="file" name="doc_moral_declaracion" accept=".pdf,.jpg,.jpeg,.png" class="doc-moral w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"> 
+          </div> 
+        </div> 
+      </section> 
+
+      <!-- SECCIÓN DOCUMENTOS FÍSICA --> 
+      <section id="sectionDocsFisica" class="hidden space-y-4"> 
+        <h2 class="text-xl font-semibold text-slate-800 border-l-4 border-blue-600 pl-3">3. Documentación - Persona Física</h2> 
+        <div class="grid grid-cols-1 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-200"> 
+          <div> 
+            <label class="block text-sm font-medium mb-1">Constancia de Situación Fiscal actualizada *</label> 
+            <input type="file" name="doc_fisica_csf" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"> 
+          </div> 
+          <div> 
+            <label class="block text-sm font-medium mb-1">Comprobante de domicilio *</label> 
+            <input type="file" name="doc_fisica_domicilio" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"> 
+          </div> 
+          <div> 
+            <label class="block text-sm font-medium mb-1">Contrato con el recinto donde se realizará el evento *</label> 
+            <input type="file" name="doc_fisica_contrato" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"> 
+          </div> 
+          <div> 
+            <label class="block text-sm font-medium mb-1">Identificación oficial (INE) de la persona firmante *</label> 
+            <input type="file" name="doc_fisica_ine_firmante" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"> 
+          </div> 
+          <div> 
+            <label class="block text-sm font-medium mb-1">Identificación oficial (INE) del testigo *</label> 
+            <input type="file" name="doc_fisica_ine_testigo" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"> 
+          </div> 
+          <div> 
+            <label class="block text-sm font-medium mb-1">Última declaración anual *</label> 
+            <input type="file" name="doc_fisica_declaracion" accept=".pdf,.jpg,.jpeg,.png" class="doc-fisica w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"> 
+          </div> 
+        </div> 
+      </section> 
+
+      <div class="pt-4"> 
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200"> 
+          Enviar Información 
+        </button> 
+      </div> 
+
+    </form> 
+  </div> 
+
+  <script> 
+    // Ocultar el Splash Screen cuando la página termine de cargar
+    window.addEventListener('load', function() {
+      const splash = document.getElementById('splash-screen');
+      if (splash) {
+        setTimeout(() => {
+          splash.classList.add('hidden');
+        }, 600);
+      }
+    });
+
+    function toggleDocs(type) { 
+      const sectionMoral = document.getElementById('sectionDocsMoral'); 
+      const sectionFisica = document.getElementById('sectionDocsFisica'); 
       
-      const tipoPersona = document.querySelector('input[name="tipoPersona"]:checked');
-      if (!tipoPersona) {
-        alert('Por favor, selecciona si el convenio se firmará como Persona Moral o Persona Física.');
-        return;
-      }
+      const inputsMoral = document.querySelectorAll('.doc-moral'); 
+      const inputsFisica = document.querySelectorAll('.doc-fisica'); 
 
-      alert('Formulario completado correctamente. Listo para procesar o enviar.');
-    }
-  </script>
-</body>
+      if (type === 'moral') { 
+        sectionMoral.classList.remove('hidden'); 
+        sectionFisica.classList.add('hidden'); 
+        
+        inputsMoral.forEach(i => i.required = true); 
+        inputsFisica.forEach(i => { i.required = false; i.value = ''; }); 
+      } else if (type === 'fisica') { 
+        sectionFisica.classList.remove('hidden'); 
+        sectionMoral.classList.add('hidden'); 
+        
+        inputsFisica.forEach(i => i.required = true); 
+        inputsMoral.forEach(i => { i.required = false; i.value = ''; }); 
+      } 
+    } 
+
+    function handleSubmit(event) { 
+      event.preventDefault(); 
+      
+      const tipoPersona = document.querySelector('input[name="tipoPersona"]:checked'); 
+      if (!tipoPersona) { 
+        alert('Por favor, selecciona si el convenio se firmará como Persona Moral o Persona Física.'); 
+        return; 
+      } 
+
+      alert('Formulario completado correctamente. Listo para procesar o enviar.'); 
+    } 
+  </script> 
+</body> 
 </html>
